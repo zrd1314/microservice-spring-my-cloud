@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: microservice-gateway-zuul
+
+eureka:
+  client:
+    service-url:
+       defaultZone: http://zrd123:zrd123@localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+server:
+  port: 8040
+#http://localhost:8040/myusers/simple/1 所以访问microservice-provider-user服务的地址path被代理成了/myusers/**
+zuul:
+  routes:
+    users:
+      path: /myusers/**
+      url: microservice-provider-user
+
+

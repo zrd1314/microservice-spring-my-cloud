@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: microservice-gateway-zuul
+
+eureka:
+  client:
+    service-url:
+       defaultZone: http://zrd123:zrd123@localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+server:
+  port: 8040
+  #url 方式使用zuul进行反向代理
+#http://localhost:8040/myuser-url/simple/1 所以访问microservice-provider-user服务的地址path被代理成了/myusers/**
+
+#这些简单的URL路由不会被执行为HystrixCommand，也不能使用Ribbon对多个URL进行负载平衡。为此，请指定service-route并为serviceId配置Ribbon客户端（目前需要在Ribbon中禁用Eureka支持：详见上文）
+zuul:
+  routes:
+    users:
+      path: /myuser-url/**
+      url: http://localhost:9008/
+
+
